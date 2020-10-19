@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'FlutterMovies',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        primaryColor: Colors.lightBlue[600],
+        primaryColor: Colors.lightBlue[800],
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Home(),
