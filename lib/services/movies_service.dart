@@ -7,30 +7,51 @@ import 'package:shared_preferences/shared_preferences.dart';
 const API_KEY = "19f5325275524d1d4f39fcb8c06a1761";
 
 class MovieService {
-  static Future<MovieModel> popularMovies() async {
-    try {
-      var prefs = await SharedPreferences.getInstance();
+  String _search;
 
-      final response = await http.get(
-          "https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1");
+  // Future<List<MovieDetailModel>> popularMovies() async {
+  //   try {
+  //     final response = await http.get(
+  //         "https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1");
+  //
+  //     if (response.statusCode == 200) {
+  //       Map data = json.decode(response.body);
+  //
+  //       List<MovieDetailModel> movies = (data["results"] as List)
+  //           .map((i) => new MovieDetailModel.fromJson(i))
+  //           .toList();
+  //
+  //       return movies;
+  //     } else {
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
-      if (response.statusCode == 200) {
-        Map data = json.decode(response.body);
+  Future<List<MovieDetailModel>> search(String search) async {
+    _search = search;
 
-        MovieModel movies = new MovieModel.fromJson(data);
+    http.Response response = await http.get(
+        "https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1");
 
-        final moviesDetail = (data["results"] as List)
-            .map((i) => new MovieDetailModel.fromJson(i))
-            .toList();
+    if (response.statusCode == 200) {
+      var decoded = json.decode(response.body);
 
-        movies.results = moviesDetail;
+      List<MovieDetailModel> movies = (decoded["results"] as List)
+          .map((i) => new MovieDetailModel.fromJson(i))
+          .toList();
 
+      if (_search == null) {
         return movies;
       } else {
-        return null;
+        List<MovieDetailModel> result =
+        movies.where((movie) => movie.title.contains(search)).toList();
+        return result;
       }
-    } catch (e) {
-      print(e);
+    } else {
+      throw Exception("Fail");
     }
   }
 }
