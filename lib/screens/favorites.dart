@@ -68,8 +68,8 @@ class Favorites extends StatelessWidget {
                 ),
                 onTap: () {
                   MovieDetailModel movieDetail = movie;
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => MovieDetail(movieDetail)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MovieDetail(movieDetail)));
                 },
               );
             }).toList(),
