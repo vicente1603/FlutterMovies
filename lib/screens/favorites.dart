@@ -38,9 +38,21 @@ class Favorites extends StatelessWidget {
                         movie.title,
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0),
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(5.0, 5.0),
+                                blurRadius: 3.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              Shadow(
+                                offset: Offset(5.0, 5.0),
+                                blurRadius: 8.0,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ],
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                     IconButton(
