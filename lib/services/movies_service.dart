@@ -9,26 +9,31 @@ const API_KEY = "19f5325275524d1d4f39fcb8c06a1761";
 class MovieService {
   String _search;
 
-  // Future<List<MovieDetailModel>> popularMovies() async {
-  //   try {
-  //     final response = await http.get(
-  //         "https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1");
-  //
-  //     if (response.statusCode == 200) {
-  //       Map data = json.decode(response.body);
-  //
-  //       List<MovieDetailModel> movies = (data["results"] as List)
-  //           .map((i) => new MovieDetailModel.fromJson(i))
-  //           .toList();
-  //
-  //       return movies;
-  //     } else {
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  static Future<MovieModel> popularMovies() async {
+    try {
+
+      final response = await http.get(
+          "https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1");
+
+      if (response.statusCode == 200) {
+        Map data = json.decode(response.body);
+
+        MovieModel movies = new MovieModel.fromJson(data);
+
+        final moviesDetail = (data["results"] as List)
+            .map((i) => new MovieDetailModel.fromJson(i))
+            .toList();
+
+        movies.results = moviesDetail;
+
+        return movies;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<List<MovieDetailModel>> search(String search) async {
     _search = search;

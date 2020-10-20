@@ -5,13 +5,17 @@ import 'package:flutter_movies/blocs/movies_bloc.dart';
 import 'package:flutter_movies/widgets/movie_tile.dart';
 
 class MovieResults extends StatelessWidget {
+  String result;
+
+  MovieResults(this.result);
+
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<MoviesBloc>(context);
-    bloc.inSearch.add(null);
+    bloc.inSearch.add(result);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Filmes pesquisados"),
+        title: Text("Resultado da pesquisa"),
         elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -20,15 +24,19 @@ class MovieResults extends StatelessWidget {
         child: StreamBuilder(
           stream: bloc.outMovies,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.data != null) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   return MovieTile(snapshot.data[index]);
                 },
-                itemCount: snapshot.data.length + 1,
+                itemCount: snapshot.data.length,
               );
             } else {
-              return Container();
+              return Container(
+                child: Center(
+                  child: Text("Nenhum resultado encontrado"),
+                ),
+              );
             }
           },
         ),

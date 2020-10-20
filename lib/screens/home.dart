@@ -15,8 +15,6 @@ import 'favorites.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<MoviesBloc>(context);
-    bloc.inSearch.add(null);
     return Scaffold(
       appBar: AppBar(
         title: Text("Flutter Movies"),
@@ -57,9 +55,8 @@ class Home extends StatelessWidget {
               String result =
                   await showSearch(context: context, delegate: MovieSearch());
               if (result != null) {
-                bloc.inSearch.add(result);
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(builder: (context) => MovieResults()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MovieResults(result)));
               }
             },
           )
@@ -67,31 +64,21 @@ class Home extends StatelessWidget {
       ),
       body: Container(
         color: Colors.lightBlue[200],
-        child: StreamBuilder(
-          stream: bloc.outMovies,
+        child: FutureBuilder<MovieModel>(
+          future: MovieService.popularMovies(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  if (index < snapshot.data.length) {
-                    return MovieTile(snapshot.data[index]);
-                  } else if (index > 1) {
-                    bloc.inSearch.add(null);
-                    return Container(
-                        height: 40.0,
-                        width: 40.0,
-                        alignment: Alignment.center,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                        ));
-                  } else {
-                    return Container();
-                  }
+              return ListView.separated(
+                separatorBuilder: (context, index) {
+                  return Divider(height: 2, color: Colors.black);
                 },
-                itemCount: snapshot.data.length + 1,
+                itemBuilder: (context, index) {
+                  return MovieTile(snapshot.data.results[index]);
+                },
+                itemCount: snapshot.data.results.length,
               );
             } else {
-              return Container();
+              return Center(child: CircularProgressIndicator());
             }
           },
         ),
