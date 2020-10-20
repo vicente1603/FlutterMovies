@@ -61,12 +61,12 @@ class MovieDetail extends StatelessWidget {
                   fieldInfo: movie.original_language,
                 )
               ]),
-              Row(children: <Widget>[
-                MainInfoTab(
-                  fieldTitle: "Nota",
-                  fieldInfo: movie.vote_average.toString(),
-                )
-              ]),
+              // Row(children: <Widget>[
+              //   MainInfoTab(
+              //     fieldTitle: "Nota",
+              //     fieldInfo: movie.vote_average.toString(),
+              //   )
+              // ]),
               Row(children: <Widget>[
                 MainInfoTab(
                   fieldTitle: "Data de lançamento",

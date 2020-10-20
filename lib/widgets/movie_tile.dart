@@ -72,7 +72,6 @@ class MovieTile extends StatelessWidget {
               }
             },
           ),
-          SizedBox(height: 15.0),
         ],
       ),
       subtitle: Text(

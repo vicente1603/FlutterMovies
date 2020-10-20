@@ -33,6 +33,7 @@ class Home extends StatelessWidget {
             ),
           ),
           IconButton(
+            tooltip: "Lista de favoritos",
             icon: Icon(
               Icons.star,
               color: Colors.white,
@@ -44,6 +45,7 @@ class Home extends StatelessWidget {
             },
           ),
           IconButton(
+            tooltip: "Pesquisar filme",
             icon: Icon(
               Icons.search,
               color: Colors.white,

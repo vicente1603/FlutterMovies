@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_movies/blocs/favorite_bloc.dart';
 import 'package:flutter_movies/models/movie_detail_model.dart';
 
+import 'movie_detail.dart';
+
 class Favorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -52,7 +54,11 @@ class Favorites extends StatelessWidget {
                     )
                   ],
                 ),
-                onTap: () {},
+                onTap: () {
+                  MovieDetailModel movieDetail = movie;
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => MovieDetail(movieDetail)));
+                },
               );
             }).toList(),
           );

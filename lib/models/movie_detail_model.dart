@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'dart:ffi';
+
 MovieDetailModel movieDetailModelFromJson(String str) =>
     MovieDetailModel.fromJson(json.decode(str));
 
@@ -18,7 +20,7 @@ class MovieDetailModel {
   String original_title;
   List<dynamic> genre_ids;
   String title;
-  double vote_average;
+  // double vote_average;
   String overview;
   String release_date;
 
@@ -34,7 +36,7 @@ class MovieDetailModel {
       this.original_title,
       this.genre_ids,
       this.title,
-      this.vote_average,
+      // this.vote_average,
       this.overview,
       this.release_date});
 
@@ -51,7 +53,7 @@ class MovieDetailModel {
       original_title: json["original_title"],
       genre_ids: json["genre_ids"],
       title: json["title"],
-      vote_average: json["vote_average"],
+      // vote_average: json["vote_average"] as double,
       overview: json["overview"],
       release_date: json["release_date"],
     );
@@ -69,7 +71,7 @@ class MovieDetailModel {
         "original_title": original_title,
         "genre_ids": genre_ids,
         "title": title,
-        "vote_average": vote_average,
+        // "vote_average": vote_average,
         "overview": overview,
         "release_date": release_date,
       };
